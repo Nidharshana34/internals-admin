@@ -65,7 +65,7 @@ export default function Dashboard() {
   const resolved = issues.filter((i) => i.status === "Resolved").length;
   const categoryLabels = categories.slice(0, 5);
 
-  // Bar chart data
+  
   const barData = {
     labels: categoryLabels.map((label) =>
       t(label?.toLowerCase()) || label
