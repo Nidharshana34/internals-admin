@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 820642812f24b001ec9c658fc5752208f653bbe3
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
@@ -21,7 +25,11 @@ export default function UnifiedLogin() {
     setError("");
 
     try {
+<<<<<<< HEAD
       // 1. Check in `users` collection (Super Admin + Staff)
+=======
+      // 1. Check in users collection (Super Admin)
+>>>>>>> 820642812f24b001ec9c658fc5752208f653bbe3
       const userQuery = query(
         collection(db, "users"),
         where("email", "==", email),
@@ -32,6 +40,7 @@ export default function UnifiedLogin() {
       if (!userSnap.empty) {
         const user = { id: userSnap.docs[0].id, ...userSnap.docs[0].data() };
 
+<<<<<<< HEAD
         // Store in localStorage
         localStorage.setItem("user", JSON.stringify(user));
 
@@ -41,12 +50,28 @@ export default function UnifiedLogin() {
           return;
         }
         if (user.role === "STAFF") {
+=======
+        // SUPER ADMIN
+        if (user.role === "SUPER_ADMIN") {
+          localStorage.setItem("user", JSON.stringify(user));
+          navigate("/dashboard");
+          return;
+        }
+
+        // STAFF stored in users
+        if (user.role === "STAFF") {
+          localStorage.setItem("staff", JSON.stringify(user));
+>>>>>>> 820642812f24b001ec9c658fc5752208f653bbe3
           navigate("/staff-dashboard");
           return;
         }
       }
 
+<<<<<<< HEAD
       // 2. Check in `departments` collection (Dept Heads)
+=======
+      // 2. Check in departments collection (Dept Heads)
+>>>>>>> 820642812f24b001ec9c658fc5752208f653bbe3
       const deptQuery = query(
         collection(db, "departments"),
         where("email", "==", email),
@@ -56,12 +81,33 @@ export default function UnifiedLogin() {
 
       if (!deptSnap.empty) {
         const dept = { id: deptSnap.docs[0].id, ...deptSnap.docs[0].data() };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 820642812f24b001ec9c658fc5752208f653bbe3
         localStorage.setItem("department", JSON.stringify(dept));
         navigate("/dept-dashboard");
         return;
       }
 
+<<<<<<< HEAD
+=======
+      // 3. Extra check in staff collection (if staff not found in users)
+      const staffQuery = query(
+        collection(db, "staff"),
+        where("email", "==", email),
+        where("password", "==", password)
+      );
+      const staffSnap = await getDocs(staffQuery);
+
+      if (!staffSnap.empty) {
+        const staff = { id: staffSnap.docs[0].id, ...staffSnap.docs[0].data() };
+        localStorage.setItem("staff", JSON.stringify(staff));
+        navigate("/staff-dashboard");
+        return;
+      }
+
+>>>>>>> 820642812f24b001ec9c658fc5752208f653bbe3
       // If no match
       setError("Invalid email or password");
 
@@ -127,4 +173,8 @@ export default function UnifiedLogin() {
       </Paper>
     </Box>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 820642812f24b001ec9c658fc5752208f653bbe3
